@@ -1,0 +1,40 @@
+{
+  "name": "advent",
+  "version": "1.0.0",
+  "author": "<michael.h@ifit.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && tsc -p .",
+    "clean": "npx rimraf out",
+    "start": "ts-node index execute",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+  },
+  "lint-staged": {
+    "solutions/**/*.ts": [
+      "prettier --write",
+      "yarn lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.12",
+    "@typescript-eslint/eslint-plugin": "^4.9.1",
+    "@typescript-eslint/parser": "^4.9.1",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "husky": "^4.3.5",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0"
+  }
+}
