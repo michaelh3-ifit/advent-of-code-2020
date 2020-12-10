@@ -9,7 +9,7 @@
       "request": "launch",
       "runtimeArgs": [
         "start",
-        "1b"
+        "4b"
       ],
       "runtimeExecutable": "yarn",
       "skipFiles": [
