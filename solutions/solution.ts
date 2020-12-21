@@ -1,3 +1,4 @@
 export interface ISolution {
-  GetSolution(inputFile: string): Promise<string>;
+  GetSolutionA(inputFile: string): Promise<string>;
+  GetSolutionB(inputFile: string): Promise<string>;
 }

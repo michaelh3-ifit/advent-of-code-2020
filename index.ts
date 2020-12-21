@@ -17,8 +17,10 @@ commander
 commander.parse(process.argv);
 
 async function execute(dayandpart) {
-  const solutionPath = `./solutions/${dayandpart}/index`;
-  const inputFile = path.join(__dirname, `solutions/${dayandpart}`, 'input.txt');
+  const day = dayandpart.substr(0,dayandpart.length - 1);
+  const part = dayandpart.substr(dayandpart.length - 1).toUpperCase();
+  const solutionPath = `./solutions/${day}/index`;
+  const inputFile = path.join(__dirname, `solutions/${day}`, 'input.txt');
 
   console.log(`Loading ${dayandpart} from ${solutionPath}...`);
 
@@ -33,7 +35,7 @@ async function execute(dayandpart) {
   console.log(`Running ${dayandpart}...`);
 
   const start = +new Date();
-  const results = await solution.GetSolution(inputFile);
+  const results = await solution["GetSolution" + part](inputFile);
   const timeElapsed = +new Date() - start;
   console.log(`Result: ${chalk.bgHex('#0000AA').whiteBright(results)} (${timeElapsed} ms)`);
 }

@@ -1,14 +1,14 @@
 import { ISolution } from '../solution';
 import { processFile } from '../utils/file-reader';
 
-export default class Day4B implements ISolution {
-  async GetSolution(inputFile: string): Promise<string> {
+export default class Solution implements ISolution {
+  async GetSolutionA(inputFile: string): Promise<string> {
     let count = 0;
 
     let currentData = [];
     await processFile(inputFile, line => {
       if (!line) {
-        if (this.ValidatePassportData(currentData)) {
+        if (this.ValidatePassportDataBasic(currentData)) {
           count++;
         }
         currentData = [];
@@ -18,14 +18,49 @@ export default class Day4B implements ISolution {
 
     // Gotta process the last passport since there isn't a blank line after
     // the data to trigger ValidatePassportData being called
-    if (this.ValidatePassportData(currentData)) {
+    if (this.ValidatePassportDataBasic(currentData)) {
       count++;
     }
 
     return count.toString();
   }
 
-  private ValidatePassportData(data: string[]): boolean {
+  async GetSolutionB(inputFile: string): Promise<string> {
+    let count = 0;
+
+    let currentData = [];
+    await processFile(inputFile, line => {
+      if (!line) {
+        if (this.ValidatePassportDataAdvanced(currentData)) {
+          count++;
+        }
+        currentData = [];
+      }
+      currentData.push(line);
+    });
+
+    // Gotta process the last passport since there isn't a blank line after
+    // the data to trigger ValidatePassportData being called
+    if (this.ValidatePassportDataAdvanced(currentData)) {
+      count++;
+    }
+
+    return count.toString();
+  }
+
+  private ValidatePassportDataBasic(data: string[]): boolean {
+    const requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
+    const parsedData = {};
+    data.forEach(row => {
+      row.split(' ').forEach(item => {
+        const parsedItem = item.split(':');
+        parsedData[parsedItem[0]] = parsedItem[1];
+      });
+    });
+    return requiredFields.every(f => parsedData[f]);
+  }
+
+  private ValidatePassportDataAdvanced(data: string[]): boolean {
     const requiredFields = [
       {
         field: 'byr',

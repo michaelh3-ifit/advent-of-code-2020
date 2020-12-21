@@ -2,7 +2,7 @@ import { ISolution } from '../solution';
 import { processFile } from '../utils/file-reader';
 
 export default class Solution implements ISolution {
-  async GetSolution(inputFile: string): Promise<string> {
+  async GetSolutionA(inputFile: string): Promise<string> {
     const data: number[] = [];
     await processFile(inputFile, (line: string) => {
       data.push(this.ProcessRow(line));
@@ -10,6 +10,19 @@ export default class Solution implements ISolution {
 
     data.sort((a, b) => b - a);
     return data[0].toString();
+  }
+  async GetSolutionB(inputFile: string): Promise<string> {
+    const data: number[] = [];
+    await processFile(inputFile, (line: string) => {
+      data.push(this.ProcessRow(line));
+    });
+
+    data.sort((a, b) => b - a);
+    const lastI = data.length - 1;
+    const result =
+      data.find((val: number, i: number, arr: number[]) => i !== 0 && i !== lastI && val - 1 !== arr[i + 1]) - 1;
+
+    return result.toString();
   }
 
   ProcessRow(line: string): number {
