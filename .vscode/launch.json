@@ -9,7 +9,8 @@
       "request": "launch",
       "runtimeArgs": [
         "start",
-        "4b"
+        "'${input:dayAndPart}'",
+        "-s"
       ],
       "runtimeExecutable": "yarn",
       "skipFiles": [
@@ -17,5 +18,13 @@
       ],
       "type": "pwa-node"
     },
+  ],
+  "inputs": [
+    {
+      "id": "dayAndPart",
+      "type": "promptString",
+      "description": "Enter the day and part to run (e.g. 9a)",
+      "default": "10b"
+    }
   ]
 }

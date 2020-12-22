@@ -5,10 +5,11 @@ import * as path from 'path';
 
 commander
   .command('execute <dayandpart>')
+  .option('-s, --sample-data', null, false)
   .description('Executes the solution logic for a given day and part (ie 1a or 5b)')
-  .action(async dayandpart => {
+  .action(async (dayandpart, cmdObj) => {
     try {
-      await execute(dayandpart);
+      await execute(dayandpart, cmdObj["sampleData"]);
     } catch (e) {
       console.log(e.message);
     }
@@ -16,11 +17,12 @@ commander
 
 commander.parse(process.argv);
 
-async function execute(dayandpart) {
+async function execute(dayandpart, useSampleData) {
+  dayandpart = dayandpart.replace(/'/g,"");
   const day = dayandpart.substr(0,dayandpart.length - 1);
   const part = dayandpart.substr(dayandpart.length - 1).toUpperCase();
   const solutionPath = `./solutions/${day}/index`;
-  const inputFile = path.join(__dirname, `solutions/${day}`, 'input.txt');
+  const inputFile = path.join(__dirname, `solutions/${day}`, useSampleData ? 'sample-input.txt': 'input.txt');
 
   console.log(`Loading ${dayandpart} from ${solutionPath}...`);
 
